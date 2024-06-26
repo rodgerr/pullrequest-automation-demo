@@ -16,6 +16,6 @@ jobs:
     steps:
 
       - name: create pull request
-        run: gh pr create -B ${{ DEFAULT_BRANCH }} -H ${{ BRANCH_NAME }} --title 'Merge Branch ${{ BRANCH_NAME }}' --body 'Created by Github action'
+        run: gh pr create -B ${{ env.DEFAULT_BRANCH }} -H ${{ env.BRANCH_NAME }} --title 'Merge Branch ${{ BRANCH_NAME }}' --body 'Created by Github action'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
