@@ -12,7 +12,8 @@ jobs:
   create-pull-request:
     timeout-minutes: 10
     runs-on: ubuntu-latest
-    permissions: write-all
+    permissions:
+      pull-requests: write
     steps:
 
       - uses: actions/checkout@v4
