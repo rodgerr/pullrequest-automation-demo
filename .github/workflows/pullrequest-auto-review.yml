@@ -1,0 +1,43 @@
+name: Pull Request Auto Review
+
+on:
+  pull_request:
+    branches: ['main']
+
+env:
+  DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+
+jobs:
+  check-branch:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    permissions: write-all
+    outputs:
+      branch-is-suitable: ${{ steps.check-branch.outputs.branch-is-suitable }}
+    steps:
+
+      - name: check if branch is suitable for auto review
+        if: contains(BRANCH_NAME, 'update/')
+        run: echo "branch-is-suitable=true" >> $GITHUB_OUTPUT
+
+  run-checks-branch:
+    needs: check-branch
+    if: needs.check-branch.outputs.branch-is-suitable == 'true'
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Run some checks
+        run: sleep 15
+
+  add-review:
+    needs: run-checks-branch
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: create pull request
+        run: gh pr review --comment -b "Approved by pull request auto review"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

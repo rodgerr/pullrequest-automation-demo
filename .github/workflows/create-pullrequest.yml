@@ -1,0 +1,21 @@
+name: Create PullRequest
+
+on:
+  push:
+    branches: ['update/*']
+
+env:
+    DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+    BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+
+jobs:
+  create-pull-request:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+
+      - name: create pull request
+        run: gh pr create -B ${{ DEFAULT_BRANCH }} -H ${{ BRANCH_NAME }} --title 'Merge Branch ${{ BRANCH_NAME }}' --body 'Created by Github action'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
