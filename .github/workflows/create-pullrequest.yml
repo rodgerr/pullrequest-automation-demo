@@ -12,10 +12,13 @@ jobs:
   create-pull-request:
     timeout-minutes: 10
     runs-on: ubuntu-latest
-    permissions: write-all
+    permissions:
+      pull-requests: write
     steps:
 
+      - uses: actions/checkout@v4
+
       - name: create pull request
-        run: gh pr create -B ${{ DEFAULT_BRANCH }} -H ${{ BRANCH_NAME }} --title 'Merge Branch ${{ BRANCH_NAME }}' --body 'Created by Github action'
+        run: gh pr create -B ${{ env.DEFAULT_BRANCH }} -H ${{ env.BRANCH_NAME }} --title 'Merge Branch ${{ env.BRANCH_NAME }}' --body 'Created by Github action'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
