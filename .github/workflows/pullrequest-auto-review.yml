@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     outputs:
-      branch-is-suitable: ${{ steps.check-branch.outputs.branch-is-suitable }}
+      branch-is-suitable: ${{ steps.check-branch.outputs.branch_suitable }}
     steps:
 
       - name: check if branch is suitable for auto review
@@ -37,7 +37,7 @@ jobs:
 
       - name: check if branch is suitable for auto review
         if: contains(${{env.BRANCH_NAME}}, 'update/')
-        run: echo "branch-is-suitable=true" >> $GITHUB_OUTPUT
+        run: echo "branch_suitable=true" >> $GITHUB_OUTPUT
 
   run-checks-branch:
     needs: check-branch
@@ -48,7 +48,7 @@ jobs:
 
       - name: test output
         env:
-          IS_SUITABLE: ${{ needs.check-branch.outputs.branch-is-suitable}}
+          IS_SUITABLE: ${{ needs.check-branch.outputs.branch_suitable}}
         run: |
           echo "isSuitable ${{ env.IS_SUITABLE }}'"
 
