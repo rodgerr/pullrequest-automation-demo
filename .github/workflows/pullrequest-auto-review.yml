@@ -30,6 +30,13 @@ jobs:
 
       - name: check if branch is suitable for auto review
         if: contains(${{env.BRANCH_NAME}}, 'update/')
+        run: echo ${{env.BRANCH_NAME}}
+
+      - name: check branch name
+        run: echo ${{env.BRANCH_NAME}}
+
+      - name: check if branch is suitable for auto review
+        if: contains(${{env.BRANCH_NAME}}, 'update/')
         run: echo "branch-is-suitable=true" >> $GITHUB_OUTPUT
 
   run-checks-branch:
@@ -53,6 +60,8 @@ jobs:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
+
+      - uses: actions/checkout@v4
 
       - name: create pull request
         run: gh pr review --comment -b "Approved by pull request auto review"
