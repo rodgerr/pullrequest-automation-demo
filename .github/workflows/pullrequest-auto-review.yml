@@ -39,7 +39,7 @@ jobs:
         if: contains(${{env.BRANCH_NAME}}, 'update/')
         run: echo "branch_suitable=true" >> $GITHUB_OUTPUT
 
-  run-checks-branch:
+  run-checks:
     needs: check-branch
     #if: needs.check-branch.outputs.branch-is-suitable == 'true'
     timeout-minutes: 10
@@ -51,6 +51,10 @@ jobs:
           IS_SUITABLE: ${{ needs.check-branch.outputs.branch_suitable}}
         run: |
           echo "isSuitable ${{ env.IS_SUITABLE }}'"
+
+      - name: test output 2
+        run: echo "isSuitable ${{ needs.check-branch.outputs.branch_suitable }}"
+
 
       - name: Run some checks
         run: sleep 15
