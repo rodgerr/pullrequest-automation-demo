@@ -29,7 +29,7 @@ jobs:
     steps:
 
       - name: check if branch is suitable for auto review
-        if: contains(BRANCH_NAME, 'update/')
+        if: contains(${{env.BRANCH_NAME}}, 'update/')
         run: echo "branch-is-suitable=true" >> $GITHUB_OUTPUT
 
   run-checks-branch:
