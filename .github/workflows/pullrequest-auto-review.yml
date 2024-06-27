@@ -9,23 +9,13 @@ env:
   BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 
 jobs:
-  setup:
-    timeout-minutes: 10
-    runs-on: ubuntu-latest
-    permissions: write-all
-    steps:
-
-      - name: checkout repository
-        uses: actions/checkout@v4
-
-      - run: ls -la
 
   check-branch:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     permissions: write-all
     outputs:
-      branch-is-suitable: ${{ steps.check-branch.outputs.branch_suitable }}
+      branch_suitable: ${{ steps.check-branch.outputs.branch_suitable }}
     steps:
 
       - name: check if branch is suitable for auto review
@@ -60,7 +50,7 @@ jobs:
         run: sleep 15
 
   add-review:
-    needs: run-checks-branch
+    needs: run-checks
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
