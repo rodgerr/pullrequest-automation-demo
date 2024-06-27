@@ -34,10 +34,16 @@ jobs:
 
   run-checks-branch:
     needs: check-branch
-    if: needs.check-branch.outputs.branch-is-suitable == 'true'
+    #if: needs.check-branch.outputs.branch-is-suitable == 'true'
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
+
+      - name: test output
+        env:
+          IS_SUITABLE: ${{ needs.check-branch.outputs.branch-is-suitable}}
+        run: |
+          echo "isSuitable ${{ env.IS_SUITABLE }}'"
 
       - name: Run some checks
         run: sleep 15
