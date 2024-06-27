@@ -15,17 +15,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     outputs:
-      branch_suitable: ${{ steps.check-branch.outputs.branch_suitable }}
+      branch_suitable: ${{ steps.check_branch.outputs.branch_suitable }}
     steps:
 
       - name: check if branch is suitable for auto review
-        if: contains(${{env.BRANCH_NAME}}, 'update/')
-        run: echo ${{env.BRANCH_NAME}}
-
-      - name: check branch name
-        run: echo ${{env.BRANCH_NAME}}
-
-      - name: check if branch is suitable for auto review
+        id: check_branch
         if: contains(${{env.BRANCH_NAME}}, 'update/')
         run: echo "branch_suitable=true" >> $GITHUB_OUTPUT
 
