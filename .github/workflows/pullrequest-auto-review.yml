@@ -43,7 +43,7 @@ jobs:
 
       - uses: actions/checkout@v4
 
-      - name: create pull request
-        run: gh pr review ${{ github.event.number }} --comment -b "Approved by pull request auto review"
+      - name: approve pull request
+        run: gh pr review ${{ github.event.number }} --approve -b "Approved by pull request auto review"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
