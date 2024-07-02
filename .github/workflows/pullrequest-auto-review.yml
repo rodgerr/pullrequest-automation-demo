@@ -47,3 +47,8 @@ jobs:
         run: gh pr review ${{ github.event.number }} --approve -b "Approved by pull request auto review"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: enable auto merge
+        run: gh pr merge ${{ github.event.number }} --auto --squash --delete-branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
