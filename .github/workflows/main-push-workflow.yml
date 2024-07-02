@@ -1,0 +1,14 @@
+name: HelloWorld Workflow on main branch
+
+on:
+  push:
+    branches: [ 'main' ]
+
+jobs:
+
+  sample-job:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+
+      - run: Hello World on main Branch
